@@ -598,7 +598,7 @@ extract_armbian() {
     loop_old="$(losetup -P -f --show "${armbian_image_file}")"
     [[ -n "${loop_old}" ]] || error_msg "losetup ${armbian_image_file} failed."
 
-    mount_try ext4 ${loop_old}p2 ${tmp_armbian}
+    mount_try ext4 ${loop_old}p1 ${tmp_armbian}
 
     cd ${tmp_armbian}
 
