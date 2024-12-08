@@ -1,6 +1,6 @@
 echo "Start AMLOGIC mainline U-boot"
 if printenv bootfromsd; then exit; fi;
-setenv loadaddr "0x44000000"
+setenv loadaddr "0x01080000"
 setenv devtype "mmc"
 setenv l_mmc "2 1 0"
 for devnum in ${l_mmc} ; do
