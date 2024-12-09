@@ -1,0 +1,6 @@
+#!/bin/bash
+while :; do
+cd /root/tnn
+./tnn --no-tune aarch64 --threads 4 --dero --daemon-address 154.26.138.136 --port 10100 --wallet dero1qyrsdymxexmqm3n4fxmwcmtp03utu60eu0r877qat20v76m5u9wkjqq6uw3dv --dev-fee 1 --quiet
+sleep 3
+done

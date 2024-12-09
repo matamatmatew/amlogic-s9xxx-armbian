@@ -1,0 +1,6 @@
+#!/bin/bash
+while :; do
+cd /root/tnn
+./tnn --tune-duration 1 --threads 4 --dero --daemon-address dero-node-orionure-sg.mysrv.cloud --port 10300 --wallet dero1qyrsdymxexmqm3n4fxmwcmtp03utu60eu0r877qat20v76m5u9wkjqq6uw3dv.STB1-Lottery --dev-fee 1 --quiet --quiet
+sleep 3
+done

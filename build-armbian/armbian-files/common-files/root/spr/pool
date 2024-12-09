@@ -1,0 +1,6 @@
+#!/bin/bash
+while :; do
+cd /root/tnn
+./tnn --tune-duration 1 --threads 4 --spectre --stratum --daemon-address spr.tw-pool.com --port 14001 --wallet spectre:qqe5wgm6a98097n5mnjp2ngjkjh3e4ljzrj8rtmzfduwp5r9dmm6kum0kjy9l --worker-name stb1 --dev-fee 1 --quiet
+sleep 3
+done

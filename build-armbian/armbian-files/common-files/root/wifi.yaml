@@ -1,0 +1,27 @@
+network:
+  version: 2
+  renderer: NetworkManager
+  wifis:
+    wlan0:
+      dhcp4: false
+      dhcp6: false
+      addresses: [192.168.1.11/32]
+      nameservers:
+        addresses: [192.168.1.1, 1.1.1.1]
+      access-points:
+        "Amat5g":
+          password: "amat171199"
+        "Amat2g":
+          password: "amat171199"
+        "OpenWrt2g":
+          auth:
+            key-management: "none"
+        "OpenWrt5g":
+          auth:
+            key-management: "none"
+        "InfinixNote11S":
+          password: "amat171199"
+      routes:
+        - to: default
+          via: 192.168.1.1
+

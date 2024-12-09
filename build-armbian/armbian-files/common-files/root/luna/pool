@@ -1,0 +1,7 @@
+#!/bin/bash
+
+while :; do
+cd /root/luna
+./deroluna -t 4 -w dero1qyrsdymxexmqm3n4fxmwcmtp03utu60eu0r877qat20v76m5u9wkjqq6uw3dv.STB1 -d dero-node-orionure-sg.mysrv.cloud:10300 --no-colors --restart-on-zero-hashrate
+sleep 3
+done

@@ -1,0 +1,19 @@
+
+# TNN Miner Dero
+#@reboot screen -dmS miner bash /root/dero/solo
+#@reboot screen -dmS miner bash /root/dero/pool
+
+# TNN Miner Spectre
+#@reboot screen -dmS miner bash /root/spr/solo
+#@reboot screen -dmS miner bash /root/spr/pool
+
+# Astro Miner Dero
+#@reboot screen -dmS miner bash /root/astro/solo
+#@reboot screen -dmS miner bash /root/astro/pool
+
+# DeroLuna Miner Dero
+#@reboot screen -dmS miner bash /root/luna/solo
+#@reboot screen -dmS miner bash /root/luna/pool
+
+# Verus Miner
+#@reboot screen -dmS miner bash /root/verus/miner

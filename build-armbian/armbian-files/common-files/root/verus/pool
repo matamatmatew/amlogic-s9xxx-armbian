@@ -1,0 +1,6 @@
+#!/bin/bash
+while :; do
+cd /root/verus
+./ccminer -q --cpu-priority 5 -t 4 -a verus -o stratum+tcp://ap.luckpool.net:3956 -u RT98q1scxvFa1Hg2tpX7hbcsTjNPpAva5P.stb1 -p x --retry-pause=5 --timeout=30
+sleep 3
+done
