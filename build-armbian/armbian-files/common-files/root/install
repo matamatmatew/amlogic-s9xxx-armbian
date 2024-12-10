@@ -56,23 +56,23 @@ first(){
 	echo -e "${G} Setup Swap dan Hugepages..."${D}
 	sleep 1
 	if [[ ! -n $(sysctl vm.vfs_cache_pressure | grep "vm.vfs_cache_pressure = 50") ]]; then
-		echo 'vm.vfs_cache_pressure=50' | tee -a sysctl.conf
+		echo 'vm.vfs_cache_pressure=50' | tee -a /etc/sysctl.conf
 	else
-		sed -i "/vm.vfs_cache_pressure/d" sysctl.conf
-		echo 'vm.vfs_cache_pressure=50' | tee -a sysctl.conf
+		sed -i "/vm.vfs_cache_pressure/d" /etc/sysctl.conf
+		echo 'vm.vfs_cache_pressure=50' | tee -a /etc/sysctl.conf
 	fi
 	if [[ ! -n $(sysctl vm.nr_hugepages | grep "vm.nr_hugepages = 248") ]]; then
-		echo 'vm.nr_hugepages=248' | tee -a sysctl.conf
+		echo 'vm.nr_hugepages=248' | tee -a /etc/sysctl.conf
 	else
-		sed -i "/vm.nr_hugepages/d" sysctl.conf
-		echo 'vm.nr_hugepages=248' | tee -a sysctl.conf
+		sed -i "/vm.nr_hugepages/d" /etc/sysctl.conf
+		echo 'vm.nr_hugepages=248' | tee -a /etc/sysctl.conf
 	fi
 	
 	if [[ ! -n $(sysctl vm.swappiness | grep "vm.swappiness = 100") ]]; then
-		echo 'vm.swappiness = 10' | tee -a sysctl.conf
+		echo 'vm.swappiness = 10' | tee -a /etc/sysctl.conf
 	else
-		sed -i "/vm.swappiness/d" sysctl.conf
-		echo 'vm.swappiness = 10' | tee -a sysctl.conf
+		sed -i "/vm.swappiness/d" /etc/sysctl.conf
+		echo 'vm.swappiness = 10' | tee -a /etc/sysctl.conf
 	fi
 	sleep 2
 }

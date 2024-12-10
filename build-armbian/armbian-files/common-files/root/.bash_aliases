@@ -1,9 +1,10 @@
 alias ..='cd ../'
 alias ...='cd ../../'
+alias install='apt-get install '
 alias aptfull='apt-get update && apt-get upgrade -y && apt-get autoremove -y && apt-get autoclean -y && apt clean'
 alias update='apt-get update'
-alias upgrade='apt-get upgrade'
-alias autoremove='apt-get autoremove'
+alias upgrade='apt-get upgrade -y'
+alias autoremove='apt-get autoremove -y'
 alias clean='apt clean'
 alias lock='rm -rf /var/lib/apt/lists/lock /var/lib/apt/lists'
 
