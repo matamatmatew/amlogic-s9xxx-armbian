@@ -79,19 +79,23 @@ first(){
 	armbian-swap
 	sleep 2
 	RSA_KEY="/etc/ssh/ssh_host_rsa_key"
-	DSA_KEY="/etc/ssh/ssh_host_dsa_key"
 	ECDSA_KEY="/etc/ssh/ssh_host_ecdsa_key"
 	ED_KEY="/etc/ssh/ssh_host_ed25519_key"
-	if [ ! -e "$RSA_KEY" ] || [ ! -e "$DSA_KEY" ] || [ ! -e "$ED_KEY" ] || [ ! -e "$ECDSA_KEY" ]; then
+	if [ ! -e "$RSA_KEY" ] || [ ! -e "$ED_KEY" ] || [ ! -e "$ECDSA_KEY" ]; then
 		echo -e "${R} [${W}-${R}]${C} SSH RSA or DSA key(s) not available! Generating new ones..."${D}
 		dpkg-reconfigure openssh-server || ssh-keygen -A
-	elif [[ ( -e "$RSA_KEY" || -e "$DSA_KEY" || -e "$ED_KEY" || -e "$ECDSA_KEY" ) && \
-		( ! -s "$RSA_KEY" || ! -s "$DSA_KEY" ) ]] || [ ! -e "$ED_KEY" ] || [ ! -e "$ECDSA_KEY" ]; then
-		rm -f "$RSA_KEY" "$DSA_KEY" "$ED_KEY" "$ECDSA_KEY"
+		systemctl restart sshd && systemctl restart ssh
+	elif [[ ( -e "$RSA_KEY" || -e "$ED_KEY" || -e "$ECDSA_KEY" ) && \
+	     ( ! -s "$RSA_KEY" || ! -s "$ED_KEY" || ! -s "$ECDSA_KEY" ) ]]; then
+		rm -f "$RSA_KEY" "$ED_KEY" "$ECDSA_KEY"
 		echo -e "${R} [${W}-${R}]${C} SSH RSA or DSA key(s) are empty! Generating new ones..."${D}
 		dpkg-reconfigure openssh-server || ssh-keygen -A
+		systemctl restart sshd && systemctl restart ssh
 	else
-		echo -e "${R} [${W}-${R}]${C} SSH keys already installed! "${D}
+		echo -e "${R} [${W}-${R}]${C} Re-generating SSH key(s) new ones..."${D}
+		rm -f "$RSA_KEY" "$ED_KEY" "$ECDSA_KEY"
+		dpkg-reconfigure openssh-server || ssh-keygen -A
+		systemctl restart sshd && systemctl restart ssh
 	fi
 	sleep 1
 	echo -e "${G} Enable Swap file..."${D}
