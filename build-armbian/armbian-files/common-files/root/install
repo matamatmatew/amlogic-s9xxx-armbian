@@ -78,7 +78,26 @@ first(){
 	echo -e "${G} Enable Swap file..."${D}
 	armbian-swap
 	sleep 2
-	echo -e "${R} [${W}-${R}]${G} Done..."${D}
+	RSA_KEY="/etc/ssh/ssh_host_rsa_key"
+	DSA_KEY="/etc/ssh/ssh_host_dsa_key"
+	ECDSA_KEY="/etc/ssh/ssh_host_ecdsa_key"
+	ED_KEY="/etc/ssh/ssh_host_ed25519_key"
+	if [ ! -e "$RSA_KEY" ] || [ ! -e "$DSA_KEY" ] || [ ! -e "$ED_KEY" ] || [ ! -e "$ECDSA_KEY" ]; then
+		echo -e "${R} [${W}-${R}]${C} SSH RSA or DSA key(s) not available! Generating new ones..."${D}
+		dpkg-reconfigure openssh-server || ssh-keygen -A
+	elif [[ ( -e "$RSA_KEY" || -e "$DSA_KEY" || -e "$ED_KEY" || -e "$ECDSA_KEY" ) && \
+		( ! -s "$RSA_KEY" || ! -s "$DSA_KEY" ) ]] || [ ! -e "$ED_KEY" ] || [ ! -e "$ECDSA_KEY" ]; then
+		rm -f "$RSA_KEY" "$DSA_KEY" "$ED_KEY" "$ECDSA_KEY"
+		echo -e "${R} [${W}-${R}]${C} SSH RSA or DSA key(s) are empty! Generating new ones..."${D}
+		dpkg-reconfigure openssh-server || ssh-keygen -A
+	else
+		echo -e "${R} [${W}-${R}]${C} SSH keys already installed! "${D}
+	fi
+	sleep 1
+	echo -e "${G} Enable Swap file..."${D}
+	armbian-swap
+	echo -e "${R} [${W}-${R}]${G} Setup Data Done..."${D}
+	sleep 2
 }
 
 package() {
@@ -110,9 +129,9 @@ package() {
 	apt-get autoclean -y
 	sleep 1
 	apt-get clean
-	echo -e "${R} [${W}-${R}]${G} Done..."${D}
+	sleep 1
+	echo -e "${R} [${W}-${R}]${G} Setup Package Done..."${D}
 	sleep 2
-	clear
 }
 
 astro(){
