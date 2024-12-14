@@ -18,18 +18,18 @@ libuv1-dev uuid-dev libcurl4 libcurl4-openssl-dev autotools-dev openssl libssl-d
 
 check_root(){
 	if [ "$(id -u)" -ne 0 ]; then
-		echo -ne " ${R}Run this program as root!\n\n"${W}
+		echo -ne " $${R} [${W}-${R}]${R}Run this program as root!\n\n"${D}
 		exit 1
 	fi
 }
 
 first(){
-	echo -e "${R} [${W}-${R}]${C}Set Timezone..."${D}
+	echo -e "${R} [${W}-${R}]${C} Set Timezone..."${D}
 	timedatectl set-timezone Asia/Jakarta
 	sleep 1
 	timedatectl
 	sleep 1
-	echo -e "${R} [${W}-${R}]${C}Check Crontab file packages..."${D}
+	echo -e "${R} [${W}-${R}]${C} Check Crontab file packages..."${D}
 	sleep 1
 	if [[ ! -f /var/spool/cron/crontabs/root ]]; then
 		chown root:crontab root
@@ -40,7 +40,7 @@ first(){
 		cp root /var/spool/cron/crontabs/root
 	fi
 	sleep 1
-	echo -e "${R} [${W}-${R}]${C}Check Netplan file packages..."${D}
+	echo -e "${R} [${W}-${R}]${C} Check Netplan file packages..."${D}
 	sleep 1
 	if [[ ! -f /etc/netplan/wifi.yaml ]]; then
 		cp /root/wifi.yaml /etc/netplan/
@@ -53,7 +53,7 @@ first(){
 		netplan apply
 	fi
 	sleep 1
-	echo -e "${G} Setup Swap dan Hugepages..."${D}
+	echo -e "${R} [${W}-${R}]${C} Setup Swap dan Hugepages..."${D}
 	sleep 1
 	if [[ ! -n $(sysctl vm.vfs_cache_pressure | grep "vm.vfs_cache_pressure = 50") ]]; then
 		echo 'vm.vfs_cache_pressure=50' | tee -a /etc/sysctl.conf
@@ -67,7 +67,6 @@ first(){
 		sed -i "/vm.nr_hugepages/d" /etc/sysctl.conf
 		echo 'vm.nr_hugepages=248' | tee -a /etc/sysctl.conf
 	fi
-	
 	if [[ ! -n $(sysctl vm.swappiness | grep "vm.swappiness = 10") ]]; then
 		echo 'vm.swappiness = 10' | tee -a /etc/sysctl.conf
 	else
@@ -75,7 +74,7 @@ first(){
 		echo 'vm.swappiness = 10' | tee -a /etc/sysctl.conf
 	fi
 	sleep 1
-	echo -e "${G} Enable Swap file..."${D}
+	echo -e "${R} [${W}-${R}]${C} Enable Swap file..."${D}
 	armbian-swap
 	sleep 2
 	RSA_KEY="/etc/ssh/ssh_host_rsa_key"
@@ -98,37 +97,35 @@ first(){
 		systemctl restart sshd && systemctl restart ssh
 	fi
 	sleep 1
-	echo -e "${G} Enable Swap file..."${D}
-	armbian-swap
 	echo -e "${R} [${W}-${R}]${G} Setup Data Done..."${D}
 	sleep 2
 }
 
 package() {
 	cd ${current}
-	echo -e "${R} [${W}-${R}]${C}Update packages..."${D}
+	echo -e "${R} [${W}-${R}]${C} Update packages..."${D}
 	apt-get update -y
 	sleep 1
-	echo -e "${R} [${W}-${R}]${C}Upgrade packages..."${D}
+	echo -e "${R} [${W}-${R}]${C} Upgrade packages..."${D}
 	apt-get upgrade -y
 	sleep 1
-	echo -e "${R} [${W}-${R}]${C}Installing LLVM..."${D}
+	echo -e "${R} [${W}-${R}]${C} Installing LLVM..."${D}
 	sleep 1
 	if [[ ! -f /etc/apt/trusted.gpg.d/apt.llvm.org.asc ]]; then
 		curl -fsSL https://apt.llvm.org/llvm.sh | bash -s all
 		clear
 	else
-		echo -e "${R} [${W}-${R}]${C}LLVM Sudah Terpasang..."${D}
+		echo -e "${R} [${W}-${R}]${G}LLVM Sudah Terpasang..."${D}
 	fi
 	sleep 1
-	echo -e "${R} [${W}-${R}]${C}Installing packages..."${D}
+	echo -e "${R} [${W}-${R}]${C} Installing packages..."${D}
 	apt-get install ${packs} -y
 	dpkg -i ${verus_patch}/*.deb
 	sleep 1
-	echo -e "${G} Try Missing Packages..."${D}
+	echo -e "${R} [${W}-${R}]${C} Try Missing Packages..."${D}
 	apt-get install --fix-broken -y 
 	sleep 1
-	echo -e "${R} [${W}-${R}]${C}Autoremove dan Clean packages..."${D}
+	echo -e "${R} [${W}-${R}]${C} Autoremove dan Clean packages..."${D}
 	apt-get autoremove --purge -y
 	apt-get autoclean -y
 	sleep 1
@@ -138,61 +135,6 @@ package() {
 	sleep 2
 }
 
-astro(){
-	cd ${astro_patch}
-	echo -e "${R} [${W}-${R}]${C}Check Astominer Miner..."${D}
-	sleep 1
-	if [[ ! -f /usr/local/bin/astrominer ]]; then
-		echo -e "${R}Installing Astrominer..."${D}
-		cp astrominer /usr/local/bin/astrominer
-	cd ${current}
-	sleep 2
-}
-
-verus(){
-	cd ${verus_patch}
-	echo -e "${R} [${W}-${R}]${C}Check Verus Miner..."${D}
-	sleep 1
-	if [[ ! -f /usr/local/bin/ccminer ]]; then
-		echo -e "${R}Installing Verus..."${D}
-		cp A53 /usr/local/bin/ccminer
-	cd ${current}
-	sleep 2
-}
-
-tnn() {
-	cd ${tnn_patch}
-	echo -e "${R} [${W}-${R}]${C}Check TNN Miner..."${D}
-	sleep 1
-	if [[ ! -f /usr/local/bin/tnn ]]; then
-		echo -e "${R}Installing TNN Miner..."${D}
-		cp tnn /usr/local/bin/tnn
-	cd ${current}
-	sleep 2
-}
-
-xmrig(){
-	cd ${current}echo -e "${R} [${W}-${R}]${C}Check Xmrig Miner..."${D}
-	sleep 1
-	if [[ ! -f /usr/local/bin/xmrig ]]; then
-		echo -e "${R} [${W}-${R}]${C}Building Xmrig Miner..."${W}
-		git clone --single-branch -b dev https://github.com/xmrig/xmrig.git ${xmrix_build} 
-		mkdir ${xmrix_build}/build && cd ${xmrix_build}/build
-		cmake .. -DWITH_OPENCL=OFF -DWITH_CUDA=OFF -DWITH_SECURE_JIT=ON -DARM_TARGET=8
-		sleep 1
-		make -j$(nproc) && cp xmrig /usr/local/bin/ && ldd /usr/local/bin/xmrig
-		clear
-	else
-		echo -e "${G}Xmrig Miner Sudah Terpasang..."${D}
-	fi
-	cd ${current}
-	sleep 2
-}
-
 check_root
 first
 package
-#astro
-#verus
-#tnn
-#xmrig
