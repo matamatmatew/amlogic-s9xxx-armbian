@@ -61,11 +61,11 @@ first(){
 		sed -i "/vm.vfs_cache_pressure/d" /etc/sysctl.conf
 		echo 'vm.vfs_cache_pressure=50' | tee -a /etc/sysctl.conf
 	fi
-	if [[ ! -n $(sysctl vm.nr_hugepages | grep "vm.nr_hugepages = 248") ]]; then
-		echo 'vm.nr_hugepages=248' | tee -a /etc/sysctl.conf
+	if [[ ! -n $(sysctl vm.nr_hugepages | grep "vm.nr_hugepages = 64") ]]; then
+		echo 'vm.nr_hugepages=64' | tee -a /etc/sysctl.conf
 	else
 		sed -i "/vm.nr_hugepages/d" /etc/sysctl.conf
-		echo 'vm.nr_hugepages=248' | tee -a /etc/sysctl.conf
+		echo 'vm.nr_hugepages=64' | tee -a /etc/sysctl.conf
 	fi
 	if [[ ! -n $(sysctl vm.swappiness | grep "vm.swappiness = 10") ]]; then
 		echo 'vm.swappiness = 10' | tee -a /etc/sysctl.conf
