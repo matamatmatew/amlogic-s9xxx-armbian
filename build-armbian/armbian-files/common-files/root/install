@@ -12,9 +12,9 @@ astro_patch="${current}/astro"
 verus_patch="${current}/verus"
 xmrix_build="${current}/xmrig-build"
 tnn_patch="${current}/tnn"
-packs="unzip aria2 screen htop xzip git sudo nano net-tools lsb-release software-properties-common libomp5 ntp ntpdate ncdu \
-cmake make autoconf automake clang bison wget curl build-essential libboost-dev dbus gzip libhwloc-dev libjansson-dev \
-libuv1-dev uuid-dev libcurl4 libcurl4-openssl-dev autotools-dev openssl libssl-dev libtool zlib1g-dev"
+packs="unzip bc aria2 screen htop xzip git sudo nano net-tools lsb-release software-properties-common libomp5 ntp ntpdate ncdu \
+cmake make autoconf automake clang bison wget curl build-essential libboost-dev dbus gzip libhwloc-dev libjansson-dev libsodium-dev \
+libuv1-dev uuid-dev libcurl4 libcurl4-openssl-dev autotools-dev openssl libssl-dev libtool zlib1g-dev libudns-dev libc++-dev lld"
 
 check_root(){
 	if [ "$(id -u)" -ne 0 ]; then

@@ -1,6 +1,6 @@
 #!/bin/bash
 while :; do
 cd /root/spr
-./tnn --broadcast --tune-duration 1 --threads 4 --spectre --daemon-address 192.168.1.10 --port 5555 --wallet spectre:qzfsfrg4t8053a8n25hvwwr2l6kgmvgk7qepm07gwhdmsnvkvjdws5pcq36rv --dev-fee 1 --quiet
+./tnn-dev --broadcast --tune-duration 1 --threads 4 --spectre --daemon-address 192.168.1.10 --port 5555 --wallet spectre:qzfsfrg4t8053a8n25hvwwr2l6kgmvgk7qepm07gwhdmsnvkvjdws5pcq36rv --dev-fee 1 --quiet
 sleep 3
 done
